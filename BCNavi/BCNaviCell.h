@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <SWTableViewCell.h>
 
-@interface BCNaviCell : UITableViewCell
+@interface BCNaviCell : SWTableViewCell
 
 @property (nonatomic, weak) IBOutlet UIButton *button;
 @property (nonatomic, weak) IBOutlet UILabel *title;

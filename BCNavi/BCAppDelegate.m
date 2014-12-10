@@ -14,8 +14,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     BCNaviViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"BCNaviViewController"];
-    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:vc];
-    self.window.rootViewController = navi;
+//    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window.rootViewController = vc;
     [self.window makeKeyAndVisible];
     return YES;
 }

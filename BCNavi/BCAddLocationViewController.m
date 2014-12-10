@@ -14,35 +14,46 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.locations = [[NSMutableArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Locations" ofType:@"plist"]];
+
     self.name.delegate = self;
     self.location.delegate = self;
     
-    [self.navigationItem setTitle:@"ADD"];
-    
-    UIBarButtonItem *close = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStyleDone target:nil action:nil];
-    close.tintColor = [UIColor blackColor];
+    UIButton *close = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width-50, 40, 30, 30)];
+    [close setBackgroundImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
+    close.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    close.tintColor = [UIColor whiteColor];
     close.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
         [self dismissViewControllerAnimated:YES completion:nil];
         return [RACSignal empty];
     }];
-    self.navigationItem.rightBarButtonItem = close;
+    [self.view addSubview:close];
+    
+//    [self.navigationItem setTitle:@"ADD"];
+//    
+//    UIBarButtonItem *close = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStyleDone target:nil action:nil];
+//    close.tintColor = [UIColor blackColor];
+//    close.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+//        [self dismissViewControllerAnimated:YES completion:nil];
+//        return [RACSignal empty];
+//    }];
+//    self.navigationItem.rightBarButtonItem = close;
     
     self.addButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
         
         NSDictionary *newLocation = @{@"Name" : self.name.text, @"Location" : self.location.text};
         [self.locations addObject:newLocation];
         
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"Locations" ofType:@"plist"];
-        [self.locations writeToFile:path atomically:YES];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"myLocations.plist"];
         
-        BCNaviViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"BCNaviViewController"];
+        BOOL b = [self.locations writeToFile:filePath atomically:YES];
         
-        [self.navigationController pushViewController:vc animated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
         
         return [RACSignal empty];
     }];
+    
 }
 
 

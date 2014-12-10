@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SWTableViewCell.h>
 
-@interface BCNaviViewController : UITableViewController
+@interface BCNaviViewController : UITableViewController <SWTableViewCellDelegate>
 
 @end
